@@ -1,0 +1,57 @@
+{
+  com.badlogic.gdx.graphics.Color: {
+    white: { a: 1, b: 1, g: 1, r: 1 }
+  },
+  com.badlogic.gdx.scenes.scene2d.ui.Button$ButtonStyle: {
+    a-style: {
+      down: a-up,
+      up: a-down,
+    },
+    b-style: {
+      down: b-up,
+      up: b-down
+    },
+    right-style: {
+      down: right-down,
+      up: right-up
+    },
+    left-style: {
+      down: left-down,
+      up: left-up
+    },
+    up-style: {
+      down: up-down,
+      up: up-up
+    },
+    down-style: {
+      down: down-down,
+      up: down-up
+    }
+  },
+  com.badlogic.gdx.scenes.scene2d.ui.Button: {
+    a-button: {
+      style: a-style,
+      color: white
+    },
+    b-button: {
+      style: b-style,
+      color: white
+    },
+    right-pad: {
+      style: right-style,
+      color: white
+    },
+    left-pad: {
+      style: left-style,
+      color: white
+    },
+    up-pad: {
+      style: up-style,
+      color: white
+    },
+    down-pad: {
+      style: down-style,
+      color: white
+    }
+  }
+}
