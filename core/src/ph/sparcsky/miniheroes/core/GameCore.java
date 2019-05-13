@@ -1,4 +1,4 @@
-package ph.sparcsky.miniheroes;
+package ph.sparcsky.miniheroes.core;
 
 import com.badlogic.gdx.Game;
 import com.badlogic.gdx.Gdx;

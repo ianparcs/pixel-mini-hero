@@ -10,54 +10,33 @@ import com.badlogic.gdx.scenes.scene2d.ui.Container;
 import com.badlogic.gdx.scenes.scene2d.ui.Label;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
 import com.badlogic.gdx.scenes.scene2d.utils.ClickListener;
-import com.badlogic.gdx.utils.viewport.FitViewport;
-
-import java.util.ArrayList;
-import java.util.List;
+import com.badlogic.gdx.utils.viewport.StretchViewport;
 
 import ph.sparcsky.miniheroes.Constant;
-import ph.sparcsky.miniheroes.GameCore;
-import ph.sparcsky.miniheroes.MapBodyBuilder;
-import ph.sparcsky.miniheroes.Scene2DBuilder;
-import ph.sparcsky.miniheroes.WorldRenderer;
+import ph.sparcsky.miniheroes.core.GameCore;
+import ph.sparcsky.miniheroes.core.Scene2DBuilder;
 import ph.sparcsky.miniheroes.entity.Actor;
+import ph.sparcsky.miniheroes.world.GameWorld;
 
 public class MenuScreen extends BaseScreen {
 
     private Stage stage;
 
-    private List<Actor> actors;
-    private WorldRenderer world;
+    private GameWorld world;
+    private Actor jumpyActor;
+    private Actor runnyActor;
 
     public MenuScreen(GameCore game) {
         super(game);
 
         TiledMap tiledMap = asset.get(Constant.MENU_BG);
-        world = new WorldRenderer(tiledMap);
+        world = new GameWorld(tiledMap);
 
-        Actor swordActor = new Actor(asset.getAnimation(.09f, Constant.Anim.HERO_SWORD_ATTACK, Animation.PlayMode.LOOP));
-        Actor piqueActor = new Actor(asset.getAnimation(.09f, Constant.Anim.HERO_PIQUE_ATTACK, Animation.PlayMode.LOOP));
-        Actor axeActor = new Actor(asset.getAnimation(.09f, Constant.Anim.HERO_AXE_ATTACK, Animation.PlayMode.LOOP));
-        Actor bowActor = new Actor(asset.getAnimation(.09f, Constant.Anim.HERO_BOW_ATTACK, Animation.PlayMode.LOOP));
-        Actor jumpyActor = new Actor(asset.getAnimation(.09f, Constant.Anim.HERO_JUMP, Animation.PlayMode.LOOP));
-        Actor runnyActor = new Actor(asset.getAnimation(.09f, Constant.Anim.HERO_RUN, Animation.PlayMode.LOOP));
+        jumpyActor = new Actor(asset.getAnimation(.09f, Constant.Anim.HERO_JUMP, Animation.PlayMode.LOOP));
+        runnyActor = new Actor(asset.getAnimation(.09f, Constant.Anim.HERO_IDLE, Animation.PlayMode.LOOP));
 
-        swordActor.setPosition(12, 6.6f);
-        piqueActor.setPosition(18, 6.9f);
-        jumpyActor.setPosition(20f, 14);
-        bowActor.setPosition(24, 15);
-        axeActor.setPosition(4, 13);
-        runnyActor.setPosition(15, 14);
-        piqueActor.setFlip(true, false);
-        bowActor.setFlip(true, false);
-
-        actors = new ArrayList<Actor>();
-        actors.add(jumpyActor);
-        actors.add(swordActor);
-        actors.add(runnyActor);
-        actors.add(piqueActor);
-        actors.add(bowActor);
-        actors.add(axeActor);
+        jumpyActor.setPosition(18, 6);
+        runnyActor.setPosition(6, 11);
     }
 
     @Override
@@ -69,7 +48,8 @@ public class MenuScreen extends BaseScreen {
         Label.LabelStyle menuOptionStyle = new Label.LabelStyle();
         menuOptionStyle.font = asset.get(Constant.Font.SMALL);
 
-        Table table = new Table().top();
+        Table table = new Table();
+        table.top();
         table.setFillParent(true);
 
         Container<Label> lblTitle = Scene2DBuilder.buildLabel("Mini Pixel Heroes", titleStyle);
@@ -85,7 +65,7 @@ public class MenuScreen extends BaseScreen {
         table.add(lblExit).padBottom(widthHeight * .01f).row();
         table.padBottom(widthHeight * .2f);
 
-        stage = new Stage(new FitViewport(width, height), batch);
+        stage = new Stage(new StretchViewport(width, height), batch);
         stage.addActor(table);
 
         lblPlay.addListener(new ClickListener() {
@@ -102,8 +82,6 @@ public class MenuScreen extends BaseScreen {
             }
         });
 
-
-
         Gdx.input.setInputProcessor(stage);
     }
 
@@ -115,18 +93,21 @@ public class MenuScreen extends BaseScreen {
 
     @Override
     public void update(float delta) {
-        world.update();
-        for (Actor actor : actors) actor.update(delta);
+        world.update(delta);
+        jumpyActor.update(delta);
+        runnyActor.update(delta);
         stage.act(delta);
     }
 
     @Override
     public void render(SpriteBatch batch) {
-        clearScreen(0, 0, 0);
+        clearScreen(0.160f, 0.117f, 0.192f);
 
         world.draw(batch);
+
         batch.begin();
-        for (Actor actor : actors) actor.draw(batch);
+        jumpyActor.draw(batch);
+        runnyActor.draw(batch);
         batch.end();
 
         stage.draw();
@@ -138,7 +119,6 @@ public class MenuScreen extends BaseScreen {
         super.dispose();
         world.dispose();
         stage.dispose();
-        System.out.println("Menu screen dispose");
     }
 
 }

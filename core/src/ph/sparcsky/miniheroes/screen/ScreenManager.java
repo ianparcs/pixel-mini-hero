@@ -5,7 +5,7 @@ import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
 import java.util.Stack;
 
-import ph.sparcsky.miniheroes.GameCore;
+import ph.sparcsky.miniheroes.core.GameCore;
 
 public class ScreenManager {
 

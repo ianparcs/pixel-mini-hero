@@ -4,9 +4,17 @@ public interface Constant {
 
     String MENU_BG = "map/menu.tmx";
     String LEVEL_1 = "map/level1.tmx";
-    String PLAYER = "atlas/player.atlas";
 
     float PIXEL_SIZE = 8f;
+
+    interface Data {
+        String UI = "data/ui-skin.json";
+    }
+
+    interface Atlas {
+        String UI = "data/hud.atlas";
+        String PLAYER = "data/player.atlas";
+    }
 
     interface Font {
         String YOSTER = "font/yoster.ttf";
@@ -19,8 +27,8 @@ public interface Constant {
         String HERO_AXE_ATTACK = "basic_axe_attack";
         String HERO_SWORD_ATTACK = "basic_sword_attack";
         String HERO_PIQUE_ATTACK = "basic_pique_attack";
-        String HERO_JUMP  = "basic_jump";
-        String HERO_RUN  = "basic_run";
+        String HERO_JUMP = "basic_jump";
+        String HERO_RUN = "basic_run";
         String HERO_IDLE = "basic_idle";
     }
 

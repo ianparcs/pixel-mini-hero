@@ -3,7 +3,9 @@ package ph.sparcsky.miniheroes.asset;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.assets.AssetManager;
 import com.badlogic.gdx.assets.loaders.FileHandleResolver;
+import com.badlogic.gdx.assets.loaders.SkinLoader;
 import com.badlogic.gdx.assets.loaders.resolvers.InternalFileHandleResolver;
+import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.TextureAtlas;
@@ -13,6 +15,7 @@ import com.badlogic.gdx.graphics.g2d.freetype.FreeTypeFontGeneratorLoader;
 import com.badlogic.gdx.graphics.g2d.freetype.FreetypeFontLoader;
 import com.badlogic.gdx.maps.tiled.TiledMap;
 import com.badlogic.gdx.maps.tiled.TmxMapLoader;
+import com.badlogic.gdx.scenes.scene2d.ui.Skin;
 import com.badlogic.gdx.utils.Array;
 
 import ph.sparcsky.miniheroes.Constant;
@@ -34,14 +37,24 @@ public class Asset {
     }
 
     private void loadMap() {
-        assetManager.setLoader(TiledMap.class, new TmxMapLoader(fileResolver));
-        assetManager.load(Constant.LEVEL_1, TiledMap.class);
-        assetManager.load(Constant.MENU_BG, TiledMap.class);
+        TmxMapLoader loader = new TmxMapLoader(fileResolver);
+
+        TmxMapLoader.Parameters params = new TmxMapLoader.Parameters();
+        params.textureMinFilter = Texture.TextureFilter.Nearest;
+        params.textureMagFilter = Texture.TextureFilter.Nearest;
+
+        assetManager.setLoader(TiledMap.class, loader);
+        assetManager.load(Constant.LEVEL_1, TiledMap.class,params);
+        assetManager.load(Constant.MENU_BG, TiledMap.class,params);
 
     }
 
     private void loadTexture() {
-        assetManager.load(Constant.PLAYER, TextureAtlas.class);
+        assetManager.load(Constant.Atlas.PLAYER, TextureAtlas.class);
+        assetManager.load(Constant.Atlas.UI, TextureAtlas.class);
+
+        SkinLoader.SkinParameter loader = new SkinLoader.SkinParameter(Constant.Atlas.UI);
+        assetManager.load(Constant.Data.UI, Skin.class, loader);
     }
 
     private void loadFont() {
@@ -72,8 +85,12 @@ public class Asset {
     }
 
     public Array<TextureAtlas.AtlasRegion> getFrame(String frames) {
-        TextureAtlas gameAtlas = assetManager.get(Constant.PLAYER);
+        TextureAtlas gameAtlas = assetManager.get(Constant.Atlas.PLAYER);
         return gameAtlas.findRegions(frames);
+    }
+
+    public TextureAtlas getAtlas(String name) {
+        return assetManager.get(name);
     }
 
     public Animation<TextureRegion> getAnimation(float duration, String frameName, Animation.PlayMode playMode) {

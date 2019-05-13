@@ -1,7 +1,7 @@
-package ph.sparcsky.miniheroes;
+package ph.sparcsky.miniheroes.world;
 
+import com.badlogic.gdx.maps.MapLayer;
 import com.badlogic.gdx.maps.MapObject;
-import com.badlogic.gdx.maps.MapObjects;
 import com.badlogic.gdx.maps.objects.CircleMapObject;
 import com.badlogic.gdx.maps.objects.PolygonMapObject;
 import com.badlogic.gdx.maps.objects.PolylineMapObject;
@@ -17,6 +17,8 @@ import com.badlogic.gdx.physics.box2d.CircleShape;
 import com.badlogic.gdx.physics.box2d.FixtureDef;
 import com.badlogic.gdx.physics.box2d.PolygonShape;
 import com.badlogic.gdx.physics.box2d.Shape;
+
+import ph.sparcsky.miniheroes.Constant;
 
 public class MapBodyBuilder {
 
@@ -72,9 +74,9 @@ public class MapBodyBuilder {
         return chain;
     }
 
-    public static void buildShapes(WorldRenderer world, MapObjects objects) {
+    public static void buildShapes(GameWorld world, MapLayer mapLayer, boolean sensor) {
 
-        for (MapObject object : objects) {
+        for (MapObject object : mapLayer.getObjects()) {
             if (object instanceof TextureMapObject) continue;
 
             Shape shape;
@@ -96,10 +98,12 @@ public class MapBodyBuilder {
 
             FixtureDef fixtureDef = new FixtureDef();
             fixtureDef.shape = shape;
-            fixtureDef.restitution = 0f;
+            fixtureDef.isSensor = sensor;
+            fixtureDef.restitution = 0.0f;
+            fixtureDef.density = 1f;
             fixtureDef.friction = 0f;
 
-            body.createFixture(fixtureDef).setUserData("GROUND");
+            body.createFixture(fixtureDef).setUserData(mapLayer.getName());
             shape.dispose();
         }
     }

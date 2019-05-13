@@ -1,4 +1,4 @@
-package ph.sparcsky.miniheroes;
+package ph.sparcsky.miniheroes.collision;
 
 import com.badlogic.gdx.physics.box2d.Contact;
 import com.badlogic.gdx.physics.box2d.ContactImpulse;

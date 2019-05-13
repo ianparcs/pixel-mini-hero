@@ -2,7 +2,7 @@ package ph.sparcsky.miniheroes.desktop;
 
 import com.badlogic.gdx.backends.lwjgl.LwjglApplication;
 import com.badlogic.gdx.backends.lwjgl.LwjglApplicationConfiguration;
-import ph.sparcsky.miniheroes.GameCore;
+import ph.sparcsky.miniheroes.core.GameCore;
 
 public class DesktopLauncher {
 	public static void main (String[] arg) {

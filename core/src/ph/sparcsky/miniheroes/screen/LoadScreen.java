@@ -2,7 +2,7 @@ package ph.sparcsky.miniheroes.screen;
 
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 
-import ph.sparcsky.miniheroes.GameCore;
+import ph.sparcsky.miniheroes.core.GameCore;
 
 public class LoadScreen extends BaseScreen {
 

@@ -53,4 +53,5 @@ public abstract class Entity {
     public float getY() {
         return y;
     }
+
 }
