@@ -10,6 +10,7 @@ public class DesktopLauncher {
 		config.title = "Mini Pixel Hero";
 		config.width = 512;
 		config.height = 512;
+		config.forceExit = true;
 		new LwjglApplication(new GameCore(), config);
 	}
 }

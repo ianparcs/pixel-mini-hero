@@ -3,6 +3,8 @@ package ph.sparcsky.miniheroes.hud;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.scenes.scene2d.Stage;
 import com.badlogic.gdx.scenes.scene2d.ui.Table;
+import com.badlogic.gdx.utils.viewport.FillViewport;
+import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.StretchViewport;
 
 import ph.sparcsky.miniheroes.asset.Asset;
@@ -19,7 +21,7 @@ public class Hud {
         table = new Table();
         table.setFillParent(true);
 
-        hud = new Stage(new StretchViewport(width, height));
+        hud = new Stage(new FitViewport(width, height));
         hud.addActor(table);
 
         Gdx.input.setInputProcessor(hud);

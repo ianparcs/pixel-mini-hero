@@ -1,0 +1,90 @@
+[33mcommit 34ca1dbb4b22b93162dfe770156979bbd8041290[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: ianparcon <ianparcs@gmail.com>
+Date:   Mon May 13 18:58:31 2019 +0800
+
+    commit
+
+[1mdiff --git a/core/src/ph/sparcsky/miniheroes/hud/AndroidHud.java b/core/src/ph/sparcsky/miniheroes/hud/AndroidHud.java[m
+[1mnew file mode 100644[m
+[1mindex 0000000..bff48ab[m
+[1m--- /dev/null[m
+[1m+++ b/core/src/ph/sparcsky/miniheroes/hud/AndroidHud.java[m
+[36m@@ -0,0 +1,78 @@[m
+[32m+[m[32mpackage ph.sparcsky.miniheroes.hud;[m
+[32m+[m
+[32m+[m[32mimport com.badlogic.gdx.scenes.scene2d.ui.Button;[m
+[32m+[m[32mimport com.badlogic.gdx.scenes.scene2d.ui.Container;[m
+[32m+[m[32mimport com.badlogic.gdx.scenes.scene2d.ui.Skin;[m
+[32m+[m[32mimport com.badlogic.gdx.scenes.scene2d.ui.Table;[m
+[32m+[m[32mimport com.badlogic.gdx.scenes.scene2d.ui.Value;[m
+[32m+[m
+[32m+[m[32mimport ph.sparcsky.miniheroes.Constant;[m
+[32m+[m[32mimport ph.sparcsky.miniheroes.asset.Asset;[m
+[32m+[m[32mimport ph.sparcsky.miniheroes.controller.GameController;[m
+[32m+[m[32mimport ph.sparcsky.miniheroes.controller.GamePadController;[m
+[32m+[m
+[32m+[m[32mpublic class AndroidHud extends Hud {[m
+[32m+[m
+[32m+[m[32m    private Button aButton;[m
+[32m+[m[32m    private Button bButton;[m
+[32m+[m[32m    private Button leftButton;[m
+[32m+[m[32m    private Button rightButton;[m
+[32m+[m[32m    private Button upButton;[m
+[32m+[m[32m    private Button downButton;[m
+[32m+[m
+[32m+[m[32m    public AndroidHud(Asset asset) {[m
+[32m+[m[32m        super(asset);[m
+[32m+[m
+[32m+[m[32m        Skin skin = asset.get(Constant.Data.UI);[m
+[32m+[m
+[32m+[m[32m        aButton = skin.get("a-button", Button.class);[m
+[32m+[m[32m        bButton = skin.get("b-button", Button.class);[m
+[32m+[m[32m        leftButton = skin.get("left-pad", Button.class);[m
+[32m+[m[32m        rightButton = skin.get("right-pad", Button.class);[m
+[32m+[m[32m        upButton = skin.get("up-pad", Button.class);[m
+[32m+[m[32m        downButton = skin.get("down-pad", Button.class);[m
+[32m+[m
+[32m+[m[32m        Container<Button> dPadLeft = new Container<Button>(leftButton).fill();[m
+[32m+[m[32m        Container<Button> dPadRight = new Container<Button>(rightButton).fill();[m
+[32m+[m[32m        Container<Button> aPadContainer = new Container<Button>(aButton).fill();[m
+[32m+[m[32m        Container<Button> bPadContainer = new Container<Button>(bButton).fill();[m
+[32m+[m[32m        Container<Button> upPadContainer = new Container<Button>(upButton).fill();[m
+[32m+[m[32m        Container<Button> downPadContainer = new Container<Button>(downButton).fill();[m
+[32m+[m
+[32m+[m[32m        Value padSize = Value.percentHeight(0.01f, table);[m
+[32m+[m
+[32m+[m[32m        Table buttonGroup = new Table();[m
+[32m+[m[32m        buttonGroup.add(bPadContainer).padLeft(padSize).width(Value.percentWidth(0.5f, buttonGroup)).grow().right();[m
+[32m+[m[32m        buttonGroup.row();[m
+[32m+[m[32m        buttonGroup.add(aPadContainer).padRight(padSize).width(Value.percentWidth(0.5f, buttonGroup)).grow().left();[m
+[32m+[m
+[32m+[m[32m        Table dPadGroup = new Table();[m
+[32m+[m[32m        dPadGroup.add(upPadContainer).width(Value.percentWidth(0.5f, buttonGroup)).colspan(2).center().grow();[m
+[32m+[m
+[32m+[m[32m        dPadGroup.row();[m
+[32m+[m[32m        dPadGroup.add(dPadLeft).width(Value.percentWidth(0.5f, buttonGroup)).grow();[m
+[32m+[m[32m        dPadGroup.add(dPadRight).width(Value.percentWidth(0.5f, buttonGroup)).grow();[m
+[32m+[m[32m        dPadGroup.row();[m
+[32m+[m
+[32m+[m[32m        dPadGroup.add(downPadContainer).colspan(2).width(Value.percentWidth(0.5f, buttonGroup)).center().grow();[m
+[32m+[m
+[32m+[m[32m        Value dPadHeight = Value.percentHeight(.23f, table);[m
+[32m+[m[32m        Value dPadWidth = Value.percentWidth(.23f, table);[m
+[32m+[m[32m        Value buttonWidth = Value.percentWidth(.16f, table);[m
+[32m+[m[32m        Value buttonHeight = Value.percentHeight(.16f, table);[m
+[32m+[m[32m        float pad = Value.percentHeight(.5f, table).get() + Value.percentWidth(.5f, table).get();[m
+[32m+[m
+[32m+[m[32m        table.add(dPadGroup).pad(pad).size(dPadWidth, dPadHeight).bottom().left().grow();[m
+[32m+[m[32m        table.add(buttonGroup).pad(pad).size(buttonWidth, buttonHeight).bottom().right().grow();[m
+[32m+[m
+[32m+[m[32m    }[m
+[32m+[m
+[32m+[m[32m    public void addGamePad(GamePadController gamePad) {[m
+[32m+[m[32m        gamePad.addButton(GameController.Pad.A, aButton);[m
+[32m+[m[32m        gamePad.addButton(GameController.Pad.B, bButton);[m
+[32m+[m[32m        gamePad.addButton(GameController.Pad.LEFT, leftButton);[m
+[32m+[m[32m        gamePad.addButton(GameController.Pad.RIGHT, rightButton);[m
+[32m+[m[32m        gamePad.addButton(GameController.Pad.UP, upButton);[m
+[32m+[m[32m        gamePad.addButton(GameController.Pad.DOWN, downButton);[m
+[32m+[m[32m    }[m
+[32m+[m[32m}[m
